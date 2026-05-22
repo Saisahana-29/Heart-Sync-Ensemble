@@ -1,0 +1,4 @@
+## frist run procces to run
+1-- conda create -n python
+2. conda activate python=3.10
+3. python app.py

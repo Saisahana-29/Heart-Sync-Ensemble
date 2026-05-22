@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+    <section class="container mx-auto py-12">
+        <h2 class="text-3xl font-bold text-center mb-8 animate__animated animate__fadeInDown">About Us</h2>
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 p-6 animate__animated animate__fadeInLeft">
+                <img src="/static/images/c53b5e84-9495-4b1f-8df1-f2d41f5d6561.png" alt="Heart Health" class=" shadow-lg"  >
+            </div>
+            <div class="md:w-1/2 p-6 animate__animated animate__fadeInRight" style="margin-top: -150px;">
+                <p class="text-lg mb-4" style="text-align: justify;">Heart Sync Ensemble leverages cutting-edge ensemble learning techniques combined with SMOTE to predict heart disease with high accuracy. Our mission is to empower individuals with accessible and reliable health predictions.</p>
+                <p class="text-lg" style="text-align: justify;"> with early detection being critical for 
+                    improving patient outcomes. Traditional machine learning models often struggle with imbalanced datasets and lack interpretability, limiting their clinical applicability. 
+                    To address these challenges, this research introduces HeartSync Ensemble, a comprehensive framework that combines advanced ensemble learning techniques, SMOTE for data balancing,
+                     XAI for interpretability, and K-best feature selection for dimensionality reduction. The framework incorporates stacking and voting classifiers, alongside a novel CNN+RF hybrid 
+                     model, evaluated using K-fold cross-validation. By comparing model performance before and after K-best feature selection, this study aims to develop a highly 
+                    accurate and interpretable system for heart disease prediction suitable for real-world medical applications.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

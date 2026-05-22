@@ -1,0 +1,29 @@
+{% extends "base_2.html" %}
+{% block title %}User Home{% endblock %}
+{% block content %}
+    <section class="container mx-auto py-12 text-center">
+        <h2 class="text-3xl font-bold mb-8 animate__animated animate__fadeInDown">Welcome to Your Dashboard</h2>
+        <p class="text-lg mb-6 animate__animated animate__fadeInUp">Start predicting heart disease risk with our advanced ensemble model.</p>
+        <a href="{{ url_for('predict') }}" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 animate__animated animate__bounce">Make a Prediction</a>
+    </section>
+    <section class="container mx-auto py-12 text-center">
+        <h3 class="text-3xl font-semibold mb-8 animate__animated animate__fadeInUp">Why Heart Sync Ensemble?</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 bg-white rounded-lg shadow-lg animate__animated animate__fadeInLeft">
+                <img src="/static/images/c53b5e84-9495-4b1f-8df1-f2d41f5d6561.png " alt="Heart Analysis" class="h-32 mx-auto mb-4">
+                <h4 class="text-xl font-bold">Accurate Predictions</h4>
+                <p>Ensemble learning ensures reliable heart disease predictions.</p>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow-lg animate__animated animate__fadeInUp">
+                <img src="/static/images/aa674e59-efc7-45df-9492-8a484a81c4c6.png" alt="SMOTE Technology" class="h-32 mx-auto mb-4">
+                <h4 class="text-xl font-bold">SMOTE Technic</h4>
+                <p>Handles imbalanced data for better model performance.</p>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow-lg animate__animated animate__fadeInRight">
+                <img src="/static/images/imge2.png  " alt="User Friendly" class="h-32 mx-auto mb-4">
+                <h4 class="text-xl font-bold">User-Friendly</h4>
+                <p>Easy-to-use interface for seamless predictions.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "base_2.html" %}
+{% block title %}Predict{% endblock %}
+{% block content %}
+<section class="container mx-auto p-6 max-w-lg bg-white rounded-lg shadow-lg mt-12 animate__animated animate__zoomIn">
+    <h2 class="text-2xl font-bold text-center mb-6">Heart Disease Prediction</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="bg-{{ 'green' if category == 'success' else 'red' }}-100 border-l-4 border-{{ 'green' if category == 'success' else 'red' }}-500 text-{{ 'green' if category == 'success' else 'red' }}-700 p-4 mb-4" role="alert">
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('predict') }}" method="POST" onsubmit="return validatePredictForm()">
+        <h2 style="text-align: center;">Prediction is "{{ result }}"</h2>
+
+        <div class="mb-4">
+            <label for="age" class="block text-gray-700">Age (1-120)</label>
+            <input type="number" id="age" name="age" class="w-full p-2 border rounded" min="1" max="120" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="sex" class="block text-gray-700">Sex</label>
+            <select id="sex" name="sex" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">Female</option>
+                <option value="1">Male</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="fbs" class="block text-gray-700">Fasting Blood Sugar &gt; 120 mg/dL</label>
+            <select id="fbs" name="fbs" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">False (≤ 120)</option>
+                <option value="1">True (&gt; 120)</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="restecg" class="block text-gray-700">Resting ECG Results</label>
+            <select id="restecg" name="restecg" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">Normal</option>
+                <option value="1">ST-T Abnormality</option>
+                <option value="2">Left Ventricular Hypertrophy</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="cp" class="block text-gray-700">Chest Pain Type</label>
+            <select id="cp" name="cp" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">Typical Angina</option>
+                <option value="1">Atypical Angina</option>
+                <option value="2">Non-Anginal Pain</option>
+                <option value="3">Asymptomatic</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="trestbps" class="block text-gray-700">Resting Blood Pressure (90–200)</label>
+            <input type="number" id="trestbps" name="trestbps" class="w-full p-2 border rounded" min="90" max="200" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="chol" class="block text-gray-700">Serum Cholesterol (100–600)</label>
+            <input type="number" id="chol" name="chol" class="w-full p-2 border rounded" min="100" max="600" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="thalach" class="block text-gray-700">Maximum Heart Rate (60–220)</label>
+            <input type="number" id="thalach" name="thalach" class="w-full p-2 border rounded" min="60" max="220" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="exang" class="block text-gray-700">Exercise-Induced Angina</label>
+            <select id="exang" name="exang" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="oldpeak" class="block text-gray-700">ST Depression (0–6.2)</label>
+            <input type="number" id="oldpeak" name="oldpeak" class="w-full p-2 border rounded" min="0" max="6.2" step="0.1" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="slope" class="block text-gray-700">Slope of Peak ST Segment</label>
+            <select id="slope" name="slope" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">Upsloping</option>
+                <option value="1">Flat</option>
+                <option value="2">Downsloping</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="ca" class="block text-gray-700">Number of Major Vessels (0–4)</label>
+            <select id="ca" name="ca" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="thal" class="block text-gray-700">Thalassemia</label>
+            <select id="thal" name="thal" class="w-full p-2 border rounded" required>
+                <option value="">Select</option>
+                <option value="0">Normal</option>
+                <option value="1">Fixed Defect</option>
+                <option value="2">Reversible Defect</option>
+                <option value="3">Not Used</option>
+            </select>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 animate__animated animate__pulse animate__infinite">
+            Predict
+        </button>
+    </form>
+</section>
+
+<script>
+    function validatePredictForm() {
+        const fields = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak'];
+        const selects = ['sex', 'fbs', 'restecg', 'cp', 'exang', 'slope', 'ca', 'thal'];
+        for (let id of fields) {
+            let val = document.getElementById(id).value;
+            if (!val || isNaN(val)) {
+                alert(`Please enter a valid number for ${id}`);
+                return false;
+            }
+        }
+        for (let id of selects) {
+            let val = document.getElementById(id).value;
+            if (!val) {
+                alert(`Please select a valid option for ${id}`);
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+{% endblock %}
